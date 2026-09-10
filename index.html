@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ali Rezazadeh — AI Engineer</title>
+<meta name="description" content="Ali Rezazadeh — AI Engineer building LLM and agentic systems: search, multi-agent orchestration, voice AI, and secure on-premise deployments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink:#14181f;
+    --ink-soft:#1e2530;
+    --paper:#f4f5f3;
+    --panel:#ffffff;
+    --text:#1c2026;
+    --text-soft:#565f6b;
+    --text-on-ink:#eceee9;
+    --text-on-ink-soft:#9aa2ad;
+    --accent:#c17817;
+    --accent-soft:#e7b978;
+    --line:#d8d7d0;
+    --line-on-ink:#333c49;
+    --font-display:'Fraunces', serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --content-w: 1100px;
+    --text-w: 700px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    margin:0;
+    color:inherit;
+  }
+  p{ margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  section{ padding:0; }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:var(--content-w);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(244,245,243,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--content-w);
+    margin:0 auto;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+  }
+  .mark{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:19px;
+    letter-spacing:0.01em;
+  }
+  .mark span{ color:var(--accent); }
+  nav.links{ display:flex; align-items:center; gap:28px; }
+  nav.links a{
+    font-size:14.5px;
+    color:var(--text-soft);
+    transition:color .15s ease;
+  }
+  nav.links a:hover{ color:var(--text); }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 18px;
+    font-size:14.5px;
+    font-weight:500;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    white-space:nowrap;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .btn:hover{ background:var(--ink); color:var(--text-on-ink); }
+  .btn.solid{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:var(--ink);
+  }
+  .btn.solid:hover{ background:#a5680f; border-color:#a5680f; color:#fff; }
+  .btn.on-ink{ border-color:var(--line-on-ink); color:var(--text-on-ink); }
+  .btn.on-ink:hover{ background:var(--text-on-ink); color:var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:96px 0 88px;
+    overflow:hidden;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow-line{
+    font-size:15px;
+    color:var(--text-on-ink-soft);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5vw, 58px);
+    line-height:1.08;
+    color:var(--text-on-ink);
+    max-width:16ch;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--accent-soft);
+  }
+  .hero-sub{
+    margin-top:26px;
+    font-size:18px;
+    line-height:1.65;
+    color:var(--text-on-ink-soft);
+    max-width:52ch;
+  }
+  .hero-actions{
+    margin-top:38px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .node-graphic{ width:100%; height:auto; }
+  .node-graphic circle{ fill:var(--accent-soft); }
+  .node-graphic circle.dim{ fill:#4a5568; }
+  .node-graphic line{
+    stroke:#4a5568;
+    stroke-width:1.4;
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    animation:draw 1.6s ease forwards;
+  }
+  .node-graphic line.accent{ stroke:var(--accent); }
+  .node-graphic line:nth-of-type(1){ animation-delay:.1s; }
+  .node-graphic line:nth-of-type(2){ animation-delay:.25s; }
+  .node-graphic line:nth-of-type(3){ animation-delay:.4s; }
+  .node-graphic line:nth-of-type(4){ animation-delay:.55s; }
+  .node-graphic line:nth-of-type(5){ animation-delay:.7s; }
+  .node-graphic line:nth-of-type(6){ animation-delay:.85s; }
+  .node-graphic circle{
+    opacity:0;
+    animation:pop .5s ease forwards;
+  }
+  .node-graphic circle:nth-of-type(1){ animation-delay:.05s; }
+  .node-graphic circle:nth-of-type(2){ animation-delay:.2s; }
+  .node-graphic circle:nth-of-type(3){ animation-delay:.35s; }
+  .node-graphic circle:nth-of-type(4){ animation-delay:.5s; }
+  .node-graphic circle:nth-of-type(5){ animation-delay:.65s; }
+  .node-graphic circle:nth-of-type(6){ animation-delay:.8s; }
+  .node-graphic circle:nth-of-type(7){ animation-delay:.95s; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes pop{ to{ opacity:1; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .node-graphic line, .node-graphic circle{ animation:none; opacity:1; stroke-dashoffset:0; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- Generic section scaffolding ---------- */
+  .section{ padding:96px 0; }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:24px;
+    margin-bottom:48px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px;
+  }
+  .section-head h2{
+    font-size:30px;
+  }
+  .section-num{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--text-soft);
+  }
+
+  /* ---------- About ---------- */
+  .about-body{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:48px;
+  }
+  .about-label{ font-size:15px; color:var(--text-soft); }
+  .about-text{
+    font-size:19px;
+    line-height:1.75;
+    max-width:var(--text-w);
+  }
+  .about-text p + p{ margin-top:18px; }
+
+  /* ---------- Experience timeline ---------- */
+  .timeline{ display:flex; flex-direction:column; }
+  .timeline-item{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:32px;
+    padding:36px 0;
+    border-top:1px solid var(--line);
+  }
+  .timeline-item:first-child{ border-top:none; padding-top:0; }
+  .t-num{
+    font-family:var(--font-mono);
+    font-size:15px;
+    color:var(--accent);
+    padding-top:4px;
+  }
+  .t-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px 24px;
+    margin-bottom:14px;
+  }
+  .t-role{ font-size:22px; font-family:var(--font-display); font-weight:600; }
+  .t-org{ color:var(--accent); font-weight:500; }
+  .t-meta{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    color:var(--text-soft);
+  }
+  .t-list{ max-width:var(--text-w); }
+  .t-list li{
+    position:relative;
+    padding-left:18px;
+    font-size:16px;
+    color:var(--text-soft);
+    margin-top:9px;
+  }
+  .t-list li::before{
+    content:"";
+    position:absolute;
+    left:0; top:10px;
+    width:6px; height:1px;
+    background:var(--text-soft);
+  }
+
+  /* ---------- Work grid ---------- */
+  .work-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .work-card{
+    background:var(--panel);
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .work-card h3{ font-size:22px; }
+  .work-tagline{ font-family:var(--font-mono); font-size:12.5px; color:var(--accent); }
+  .work-card p{ color:var(--text-soft); font-size:15.5px; line-height:1.65; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:8px; }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-soft);
+    border:1px solid var(--line);
+    padding:4px 9px;
+  }
+
+  .indie-list{ margin-top:56px; }
+  .indie-list h3{
+    font-size:15px;
+    font-weight:500;
+    color:var(--text-soft);
+    margin-bottom:20px;
+    font-family:var(--font-body);
+  }
+  .indie-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:16px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    align-items:baseline;
+  }
+  .indie-row .name{ font-size:16.5px; }
+  .indie-row .desc{ color:var(--text-soft); font-size:14.5px; display:block; margin-top:4px; }
+  .indie-row .date{ font-family:var(--font-mono); font-size:13px; color:var(--text-soft); white-space:nowrap; }
+
+  /* ---------- Publications ---------- */
+  .pub-list{ display:flex; flex-direction:column; }
+  .pub-item{
+    padding:24px 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:16px;
+    align-items:start;
+  }
+  .pub-item:first-child{ border-top:none; }
+  .pub-title{ font-size:17.5px; font-family:var(--font-display); font-weight:600; line-height:1.4; max-width:var(--text-w); }
+  .pub-meta{ color:var(--text-soft); font-size:14px; margin-top:6px; }
+  .pub-venue{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--accent);
+    white-space:nowrap;
+    text-align:right;
+  }
+  .pub-venue .yr{ display:block; color:var(--text-soft); margin-top:3px; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:40px 56px;
+  }
+  .skill-group h3{
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--text-soft);
+    font-family:var(--font-body);
+    margin-bottom:14px;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:var(--font-mono);
+    font-size:13px;
+    padding:6px 11px;
+    background:var(--panel);
+    border:1px solid var(--line);
+  }
+
+  /* ---------- Education ---------- */
+  .edu-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  .edu-card{ border-top:2px solid var(--ink); padding-top:20px; }
+  .edu-degree{ font-family:var(--font-display); font-size:20px; font-weight:600; }
+  .edu-school{ color:var(--accent); margin-top:4px; font-size:15px; }
+  .edu-meta{ font-family:var(--font-mono); font-size:13px; color:var(--text-soft); margin-top:8px; }
+  .edu-thesis{ margin-top:12px; font-size:14.5px; color:var(--text-soft); line-height:1.6; }
+
+  .cert-list{ margin-top:56px; }
+  .cert-row{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    font-size:15px;
+  }
+  .cert-date{ font-family:var(--font-mono); font-size:13px; color:var(--text-soft); white-space:nowrap; }
+
+  .lang-row{ margin-top:56px; display:flex; gap:40px; flex-wrap:wrap; }
+  .lang-item{ font-size:15px; }
+  .lang-item span{ display:block; font-family:var(--font-mono); font-size:12.5px; color:var(--text-soft); margin-top:4px; }
+
+  /* ---------- Contact / footer ---------- */
+  footer.contact{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:96px 0 48px;
+  }
+  .contact-inner{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:48px;
+  }
+  .contact h2{
+    font-size:clamp(32px, 4vw, 46px);
+    color:var(--text-on-ink);
+    max-width:14ch;
+  }
+  .contact-sub{
+    margin-top:20px;
+    font-size:17px;
+    color:var(--text-on-ink-soft);
+    max-width:44ch;
+    line-height:1.7;
+  }
+  .contact-actions{ margin-top:32px; display:flex; gap:14px; flex-wrap:wrap; }
+  .contact-meta{ display:flex; flex-direction:column; gap:18px; justify-content:center; }
+  .contact-meta .row{ display:flex; flex-direction:column; gap:4px; }
+  .contact-meta .label{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-on-ink-soft); }
+  .contact-meta .value{ font-size:16px; }
+  .contact-meta a.value:hover{ color:var(--accent-soft); }
+  .foot-bottom{
+    margin-top:80px;
+    padding-top:24px;
+    border-top:1px solid var(--line-on-ink);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:13px;
+    color:var(--text-on-ink-soft);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .wrap, .nav-inner{ padding-left:20px; padding-right:20px; }
+    nav.links{ display:none; }
+    .hero-inner{ grid-template-columns:1fr; }
+    .hero .node-graphic{ max-width:280px; margin-top:12px; }
+    .about-body{ grid-template-columns:1fr; gap:16px; }
+    .timeline-item{ grid-template-columns:1fr; gap:10px; }
+    .work-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .edu-grid{ grid-template-columns:1fr; }
+    .contact-inner{ grid-template-columns:1fr; }
+    .section{ padding:64px 0; }
+    .pub-item{ grid-template-columns:1fr; }
+    .pub-venue{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="mark">Ali<span>.</span>Rezazadeh</a>
+    <nav class="links">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="Ali_Rezazadeh_Resume.pdf" download>Résumé</a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow-line">AI Engineer — Tehran, Iran</p>
+      <h1>I build AI systems that ship, run securely, and hold up in <em>production.</em></h1>
+      <p class="hero-sub">Four years designing and deploying LLM and agentic systems — search, multi-agent orchestration, voice AI, and secure on-premise infrastructure for enterprise.</p>
+      <div class="hero-actions">
+        <a class="btn solid" href="#work">See the work</a>
+        <a class="btn on-ink" href="mailto:alirezazadeh129@gmail.com">Email me</a>
+      </div>
+    </div>
+    <div>
+      <svg class="node-graphic" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="60" y1="60" x2="180" y2="150" />
+        <line x1="180" y1="150" x2="300" y2="70" class="accent" />
+        <line x1="180" y1="150" x2="120" y2="250" />
+        <line x1="180" y1="150" x2="270" y2="240" />
+        <line x1="60" y1="60" x2="60" y2="180" />
+        <line x1="270" y1="240" x2="300" y2="70" />
+        <circle cx="60" cy="60" r="7" class="dim"></circle>
+        <circle cx="180" cy="150" r="10"></circle>
+        <circle cx="300" cy="70" r="6" class="dim"></circle>
+        <circle cx="120" cy="250" r="6" class="dim"></circle>
+        <circle cx="270" cy="240" r="8"></circle>
+        <circle cx="60" cy="180" r="5" class="dim"></circle>
+        <circle cx="300" cy="200" r="5" class="dim"></circle>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about-body">
+    <p class="about-label">About</p>
+    <div class="about-text">
+      <p>I'm an AI engineer with a background in electrical engineering and published research in deep learning. Over the past four years I've moved from NLP research into leading an AI engineering team, working across the full product lifecycle — development, evaluation, deployment, and monitoring.</p>
+      <p>My recent work spans secure on-premise LLM infrastructure for a large telecom, an AI-powered search engine, multi-agent orchestration, and a voice assistant built for accessibility. I hold an MSc in Electrical Engineering from Iran University of Science and Technology, with a thesis on sentiment analysis using deep neural networks and large language models.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="section-num">2023 — Present</span>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <span class="t-num">02</span>
+        <div>
+          <div class="t-head">
+            <div><span class="t-role">Senior AI Engineer</span> · <span class="t-org">MTN Irancell</span></div>
+            <span class="t-meta">Feb 2026 — Present · Tehran (Hybrid)</span>
+          </div>
+          <ul class="t-list">
+            <li>Deployed and maintain an on-premise LLM inference engine serving internal applications without reliance on external APIs.</li>
+            <li>Built an internal chat interface giving company-wide access to the local LLM system.</li>
+            <li>Deployed an on-premise monitoring stack tracking LLM usage, performance, and reliability.</li>
+            <li>Built an infrastructure SQL agent that translates natural-language queries for internal teams.</li>
+            <li>Developed a server-debugging agent deployed directly on production servers to assist the Unix/infrastructure team.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <span class="t-num">01</span>
+        <div>
+          <div class="t-head">
+            <div><span class="t-role">Lead AI Engineer / Team Lead</span> · <span class="t-org">Findora</span></div>
+            <span class="t-meta">Oct 2023 — Jun 2026 · Remote, Canada</span>
+          </div>
+          <ul class="t-list">
+            <li>Led the AI engineering team — project planning, technical architecture, and team coordination.</li>
+            <li>Architected and developed Findora, an AI-powered search engine using advanced NLP and retrieval techniques.</li>
+            <li>Built Formora, an intelligent agent for automated form filling using form-detection neural networks and LLMs.</li>
+            <li>Developed BLUR, a voice-activated assistant for visually impaired users with real-time navigation guidance.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <span class="section-num">04 projects</span>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card">
+        <p class="work-tagline">Search · NLP · Retrieval</p>
+        <h3>Findora Search Engine</h3>
+        <p>An AI-powered search engine architected end to end, combining advanced NLP with retrieval techniques to serve relevant results at speed.</p>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">Qdrant</span><span class="tag">FAISS</span></div>
+      </div>
+
+      <div class="work-card">
+        <p class="work-tagline">Agents · Computer Vision</p>
+        <h3>Formora</h3>
+        <p>An intelligent agent that automates form filling, pairing a custom form-detection neural network with LLM-driven field understanding.</p>
+        <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">LangGraph</span><span class="tag">OpenAI SDK</span></div>
+      </div>
+
+      <div class="work-card">
+        <p class="work-tagline">Voice AI · Accessibility</p>
+        <h3>BLUR</h3>
+        <p>A voice-activated assistant for visually impaired users, giving real-time navigation guidance and spatial awareness through voice commands.</p>
+        <div class="tag-row"><span class="tag">Speech</span><span class="tag">Agentic AI</span><span class="tag">Real-time</span></div>
+      </div>
+
+      <div class="work-card">
+        <p class="work-tagline">On-premise · Infrastructure</p>
+        <h3>MTN On-Prem AI Stack</h3>
+        <p>Secure, self-hosted AI infrastructure for a large telecom: local inference engine, chat UI, monitoring, and infra agents — no external API dependency.</p>
+        <div class="tag-row"><span class="tag">Docker</span><span class="tag">MCP Servers</span><span class="tag">PostgreSQL</span></div>
+      </div>
+    </div>
+
+    <div class="indie-list">
+      <h3>Independent projects</h3>
+      <div class="indie-row">
+        <span><span class="name">Medical Image Captioning with Transformer + CLIP</span><span class="desc">Multimodal system combining vision and language models to generate descriptive text from medical imagery.</span></span>
+        <span class="date">Sept 2023</span>
+      </div>
+      <div class="indie-row">
+        <span><span class="name">Airline Sentiment Analysis</span><span class="desc">LSTM-CNN hybrid network classifying sentiment in social-media messages to evaluate airline service quality.</span></span>
+        <span class="date">Feb 2023</span>
+      </div>
+      <div class="indie-row">
+        <span><span class="name">Bone Fracture Detection in X-Rays</span><span class="desc">Deep learning and computer vision model for automated fracture detection in medical imaging.</span></span>
+        <span class="date">Dec 2021</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="publications">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Research &amp; publications</h2>
+      <span class="section-num">IEEE · ITU</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <div>
+          <p class="pub-title">LEMD-GARF: Lightweight Edge-Based Malware Detection Using Genetic Algorithm Feature Selection and Random Forest Classification</p>
+          <p class="pub-meta">A. Rezazadeh, M. Nezarat, A. Kalate, H. S. Shahhoseini, A. Rezaei</p>
+        </div>
+        <div class="pub-venue">ISVLSI 2026<span class="yr">Jul 2026</span></div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <p class="pub-title">Enhanced Hate Speech Detection Using Focal Loss and Multi-Head Attention for Imbalanced Social Media Text</p>
+          <p class="pub-meta">A. Rezazadeh, H. S. Shahhoseini</p>
+        </div>
+        <div class="pub-venue">ICCKE 2025<span class="yr">Aug 2025</span></div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <p class="pub-title">Acoustic Fault Diagnosis of Rolling Bearings in Induction Motors Using Time-Frequency Image Analysis</p>
+          <p class="pub-meta">E. Madadi Mahani, A. Mirabadi, A. Rezazadeh, A. H. Karamali</p>
+        </div>
+        <div class="pub-venue">ICEMD 2024<span class="yr">Jun 2024</span></div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <p class="pub-title">Functional Architecture for E-Health Based on Internet of Things</p>
+          <p class="pub-meta">A. Jafari Pozveh, A. Rezazadeh, H. S. Shahhoseini</p>
+        </div>
+        <div class="pub-venue">ITU SG-20<span class="yr">Aug 2023</span></div>
+      </div>
+
+      <div class="pub-item">
+        <div>
+          <p class="pub-title">NeuSym: Neural-Symbolic Reasoning with Implicit-Aware Enhancement for Aspect-Based Sentiment Analysis</p>
+          <p class="pub-meta">A. Rezazadeh, H. S. Shahhoseini</p>
+        </div>
+        <div class="pub-venue">In preparation<span class="yr">—</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="section-num">Toolkit</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">MATLAB</span><span class="chip">C</span><span class="chip">Verilog</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>ML / DL frameworks</h3>
+        <div class="chip-row">
+          <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">Flask</span><span class="chip">FastAPI</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>NLP &amp; retrieval</h3>
+        <div class="chip-row">
+          <span class="chip">NLTK</span><span class="chip">spaCy</span><span class="chip">Hugging Face</span><span class="chip">LangChain</span><span class="chip">LlamaIndex</span><span class="chip">Haystack</span><span class="chip">LangFuse</span><span class="chip">MCP</span><span class="chip">Qdrant</span><span class="chip">Milvus</span><span class="chip">FAISS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Agentic frameworks</h3>
+        <div class="chip-row">
+          <span class="chip">LangGraph</span><span class="chip">OpenAI SDK</span><span class="chip">Google ADK</span><span class="chip">CrewAI</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Specializations</h3>
+        <div class="chip-row">
+          <span class="chip">Voice agents</span><span class="chip">RAG</span><span class="chip">Prompt engineering</span><span class="chip">MCP servers</span><span class="chip">Sentiment analysis</span><span class="chip">Multimodal models</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Tools</h3>
+        <div class="chip-row">
+          <span class="chip">Git</span><span class="chip">Docker</span><span class="chip">LaTeX</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Education</h2>
+      <span class="section-num">2018 — 2025</span>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-degree">MSc, Electrical Engineering — Digital Electronic Systems</p>
+        <p class="edu-school">Iran University of Science and Technology</p>
+        <p class="edu-meta">2022 — 2025 · Tehran, Iran · GPA 4.00/4.00</p>
+        <p class="edu-thesis">Thesis: Sentiment Analysis for Social Network Messages Based on Deep Neural Networks and Large Language Models.</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-degree">BSc, Electrical Engineering — Electronics</p>
+        <p class="edu-school">Shahid Chamran University of Ahvaz</p>
+        <p class="edu-meta">2018 — 2022 · Ahvaz, Iran · GPA 3.47/4.00</p>
+        <p class="edu-thesis">Final two years GPA 3.60/4.00.</p>
+      </div>
+    </div>
+
+    <div class="cert-list">
+      <div class="cert-row"><span>Deep Learning — Neuromatch Academy</span><span class="cert-date">Jul 2023</span></div>
+      <div class="cert-row"><span>Introduction to TensorFlow for AI, Machine Learning, and Deep Learning</span><span class="cert-date">Mar 2023</span></div>
+      <div class="cert-row"><span>Supervised Machine Learning: Regression and Classification</span><span class="cert-date">Oct 2022</span></div>
+    </div>
+
+    <div class="lang-row">
+      <div class="lang-item">English<span>Professional working proficiency</span></div>
+      <div class="lang-item">Persian<span>Native</span></div>
+      <div class="lang-item">Arabic<span>Elementary</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div>
+      <h2>Let's work together.</h2>
+      <p class="contact-sub">Open to senior AI engineering roles and select freelance projects — LLM infrastructure, agentic systems, and applied NLP.</p>
+      <div class="contact-actions">
+        <a class="btn solid" href="mailto:alirezazadeh129@gmail.com">Email me</a>
+        <a class="btn on-ink" href="Ali_Rezazadeh_Resume.pdf" download>Download résumé</a>
+      </div>
+    </div>
+    <div class="contact-meta">
+      <div class="row">
+        <span class="label">Email</span>
+        <a class="value" href="mailto:alirezazadeh129@gmail.com">alirezazadeh129@gmail.com</a>
+      </div>
+      <div class="row">
+        <span class="label">Location</span>
+        <span class="value">Tehran, Iran</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Ali Rezazadeh</span>
+    <span>Built with care.</span>
+  </div>
+</footer>
+
+</body>
+</html>
